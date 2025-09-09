@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Restaurants · Foodify{% endblock %}
+{% block content %}
+<h1>Restaurants</h1>
+<div class="grid">
+    {% for r in restaurants %}
+    <a class="card" href="{{ url_for('menu', restaurant_id=r.id) }}">
+        <h3>{{ r.name }}</h3>
+        <p>{{ r.address }}</p>
+    </a>
+    {% else %}
+    <p>No restaurants available.</p>
+    {% endfor %}
+</div>
+{% endblock %}

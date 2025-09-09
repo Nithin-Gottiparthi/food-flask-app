@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Admin · Foodify{% endblock %}
+{% block content %}
+<h1>Admin Dashboard</h1>
+<table class="table">
+    <thead><tr><th>ID</th><th>User</th><th>Restaurant</th><th>Status</th><th>Total</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for o in orders %}
+        <tr>
+            <td>#{{ o.id }}</td>
+            <td>{{ o.user.name }} ({{ o.user.email }})</td>
+            <td>{{ o.restaurant.name }}</td>
+            <td>{{ o.status }}</td>
+            <td>₹{{ '%.2f'|format(o.total_amount) }}</td>
+            <td>
+                <form method="post" action="{{ url_for('admin_set_status', order_id=o.id) }}" class="inline-form">
+                    <select name="status">
+                        {% for s in ['Pending', 'Preparing', 'Out for Delivery', 'Delivered'] %}
+                        <option value="{{ s }}" {% if s==o.status %}selected{% endif %}>{{ s }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Update</button>
+                </form>
+            </td>
+        </tr>
+    {% else %}
+        <tr><td colspan="6">No orders.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

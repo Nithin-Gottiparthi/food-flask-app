@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Menu · {{ restaurant.name }} · Foodify{% endblock %}
+{% block content %}
+<a href="{{ url_for('restaurants') }}" class="muted">← All Restaurants</a>
+<h1>{{ restaurant.name }}</h1>
+<p class="muted">{{ restaurant.address }}</p>
+<div class="grid">
+    {% for i in items %}
+    <div class="card">
+        <h3>{{ i.name }} — ₹{{ '%.2f'|format(i.price) }}</h3>
+        <p>{{ i.description }}</p>
+        <form class="add-to-cart" method="post" action="{{ url_for('cart_add') }}" onsubmit="return addToCart(event)">
+            <input type="hidden" name="menu_item_id" value="{{ i.id }}"/>
+            <input type="number" name="quantity" min="1" value="1"/>
+            <button type="submit">Add to Cart</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+<p><a href="{{ url_for('cart_view') }}" class="button">Go to Cart</a></p>
+{% endblock %}

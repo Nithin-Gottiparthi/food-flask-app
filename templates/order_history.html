@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}My Orders · Foodify{% endblock %}
+{% block content %}
+<h1>My Orders</h1>
+<table class="table">
+    <thead><tr><th>ID</th><th>Restaurant</th><th>Status</th><th>Total</th><th>Placed</th><th></th></tr></thead>
+    <tbody>
+    {% for o in orders %}
+        <tr>
+            <td>#{{ o.id }}</td>
+            <td>{{ o.restaurant.name }}</td>
+            <td>{{ o.status }}</td>
+            <td>₹{{ '%.2f'|format(o.total_amount) }}</td>
+            <td>{{ o.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td><a class="button small" href="{{ url_for('order_status', order_id=o.id) }}">Track</a></td>
+        </tr>
+    {% else %}
+        <tr><td colspan="6">No orders yet.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

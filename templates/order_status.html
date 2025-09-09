@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Order #{{ order.id }} Status · Foodify{% endblock %}
+{% block content %}
+<h1>Order #{{ order.id }}</h1>
+<p>Restaurant: {{ order.restaurant.name }}</p>
+<p>Total: ₹{{ '%.2f'|format(order.total_amount) }}</p>
+<div class="status-badge" id="status">{{ order.status }}</div>
+<p class="muted">Auto-refreshing every {{ (poll_ms // 1000) }}s…</p>
+<script>
+    window.ORDER_ID = {{ order.id }};
+    window.POLL_MS = {{ poll_ms }};
+</script>
+{% endblock %}
